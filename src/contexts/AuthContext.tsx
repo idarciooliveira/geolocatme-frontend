@@ -18,8 +18,8 @@ interface SignInData{
 interface User{
     username: string,
     country: string,
-    latitude: string,
-    longitude: string,
+    latitude: number,
+    longitude: number,
     state: string,
     isAdmin: string
 }
@@ -47,17 +47,25 @@ export const AuthProvider : React.FC = ({children})=>{
        Cookies.set('@GeolocatmeStone', JSON.stringify(user));
 
        setUser(user)
+
+       api.defaults.headers['Authorization'] = `Bearer ${token}`
    }
 
     const logout = ()=> { 
+        Cookies.remove('@Geolocatme');
+        Cookies.remove('@GeolocatmeStone');
         setUser(null);
     }
 
     useEffect(()=>{
         const userValue = Cookies.get('@GeolocatmeStone') as string;
-        if(userValue){
+        const token = Cookies.get('@Geolocatme') as string;
+
+        if(userValue && token){
             const user = JSON.parse(userValue)
             setUser(user)
+
+            api.defaults.headers['Authorization'] = `Bearer ${token}`
         }
     },[])
 

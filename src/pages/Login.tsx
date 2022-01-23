@@ -27,7 +27,7 @@ function SignIn() {
 
       reset();
 
-      navigator('/');
+      navigator('/dashboard');
 
   }
 

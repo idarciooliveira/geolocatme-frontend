@@ -7,8 +7,8 @@ interface IFormInput{
   username: string,
   country: string,
   password: string,
-  latitude: string,
-  longitude: string,
+  latitude: number,
+  longitude: number,
   state: string,
 }
 
