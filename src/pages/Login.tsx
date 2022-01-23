@@ -3,7 +3,7 @@ import Map from '../assets/map.svg';
 import { useForm } from 'react-hook-form'
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-
+import { toast } from 'react-toastify'
 
 type IFormInput = {
   username: string,
@@ -20,14 +20,18 @@ function SignIn() {
 
 
   const onSubmit = async ({username, password}: IFormInput)=>{
-      await signIn({
-        username,
-        password
-      });
+      
+    try {
+      await signIn({ username, password });
 
       reset();
-
       navigator('/dashboard');
+
+    } catch (error) {
+      toast('Nome de usuario ou senha incorreta',{
+        type:"error"
+      })
+    }
 
   }
 
@@ -39,7 +43,7 @@ function SignIn() {
       <main>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Geolocatme</h2>
-          <h3>Seja ben-vindo</h3>
+          <h3>A melhor plataforma para localizar as pessoas que você ama!</h3>
 
           <label>Nome de Usuario</label>
           <input {...register('username', { required: true })} type='text'/>
