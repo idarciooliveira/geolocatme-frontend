@@ -1,10 +1,14 @@
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+
+
 function Dashboard(){
+
+    const { user } = useContext(AuthContext);
+
     return (
         <div className="app">
-            <div className="card">
-                <h2>Registros</h2>
-                <table></table>
-            </div>
+           <h2>Welcome, {user?.username}</h2>
         </div>
     )
 }

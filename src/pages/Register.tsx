@@ -1,37 +1,60 @@
 import Connect from '../assets/connect.svg'
+import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import api from '../services/api';
+
+interface IFormInput{
+  username: string,
+  country: string,
+  password: string,
+  latitude: string,
+  longitude: string,
+  state: string,
+}
 
 function Register() {
-    return (
+
+  const {handleSubmit, register, formState: { errors } , reset} = useForm<IFormInput>();
+
+  const onSubmit = async(values : IFormInput)=>{
+    await api.post('/users/register',{
+      ...values
+    })
+
+    alert('Cadastrado!')
+  }
+
+  return (
       <div className="container">
         <aside>
           <img src={Connect} alt='Geolocatme'/>
         </aside>
         <main>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Geolocatme</h2>
             <span>Crie sua conta para poder utilizar a nossa Plataforma</span>
 
             <label>Nome de Usuario</label>
-            <input name='username' type='text'/>
+            <input {...register('username', { required: true })} type='text'/>
 
             <label>Senha</label>
-            <input name='password' type='password'/>
+            <input {...register('password', { required: true })} type='password'/>
 
             <label>Pais</label>
-            <input name='country' type='text'/>
+            <input {...register('country', { required: true })} type='text'/>
 
             <label>Provincia</label>
-            <input name='state' type='text'/>
+            <input {...register('state', { required: true })} type='text'/>
 
             <label>Latitude</label>
-            <input name='latitude' type='number'/>
+            <input {...register('latitude', { required: true })} type='number'/>
             
             <label>Longitude</label>
-            <input name='longitude' type='number'/>
+            <input {...register('latitude', { required: true })} type='number'/>
             
             <button type='submit'>Criar Conta</button>
             <p>OU</p>
-            <a >Ja Tenho uma Conta</a>
+            <Link to='/login'>Ja Tenho uma Conta</Link>
           </form>
         </main>
       </div>
@@ -39,4 +62,5 @@ function Register() {
   }
   
   export default Register;
+
   

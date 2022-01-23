@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import Map from '../assets/map.svg';
 import { useForm } from 'react-hook-form'
-import api from '../services/api'
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+
 
 type IFormInput = {
   username: string,
@@ -10,14 +12,23 @@ type IFormInput = {
 
 function SignIn() {
 
-  const {handleSubmit, register, formState: { errors } } = useForm<IFormInput>();
+  const navigator = useNavigate();
+
+  const { signIn } = useContext(AuthContext);
+
+  const {handleSubmit, register, formState: { errors } , reset} = useForm<IFormInput>();
+
 
   const onSubmit = async ({username, password}: IFormInput)=>{
-      const response = await api.post('/auth/authenticate',{
-        username, password
+      await signIn({
+        username,
+        password
       });
 
-      console.log(response.data)
+      reset();
+
+      navigator('/');
+
   }
 
   return (
