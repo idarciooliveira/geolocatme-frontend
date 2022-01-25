@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import api from '../services/api';
+import { useEffect, useState } from 'react';
+import countriesData from '../services/countries.json'
 
 interface IFormInput{
   username: string,
@@ -13,9 +15,14 @@ interface IFormInput{
   state: string,
 }
 
+interface ICountry{
+  name: string
+}
+
 function Register() {
 
   const navigate = useNavigate();
+  const [countries, setCountries] = useState<ICountry[]>([])
   const { handleSubmit, register, formState: { errors }, reset } = useForm<IFormInput>();
 
   const onSubmit = async(values : IFormInput)=>{
@@ -37,6 +44,10 @@ function Register() {
     }
   }
 
+  useEffect(()=>{
+    setCountries(countriesData);
+  },[])
+
   return (
       <div className="container">
         <aside>
@@ -49,27 +60,32 @@ function Register() {
 
             <label>Nome de Usuario</label>
             <input {...register('username', { required: true })} type='text'/>
-            {errors.username && <span>Campo Obrigatorio</span>}
+            {errors.username && <span>Campo Incorreto!</span>}
 
             <label>Senha</label>
             <input {...register('password', { required: true })} type='password'/>
-            {errors.password && <span>Campo Obrigatorio</span>}
+            {errors.password && <span>Campo Incorreto!</span>}
 
             <label>Pais</label>
-            <input {...register('country', { required: true })} type='text'/>
-            {errors.country && <span>Campo Obrigatorio</span>}
+            <select {...register('country', { required: true })} required>
+              {countries.length > 0 && countries.map(country=>(
+                  <option key={country.name} value={country.name}>
+                              {country.name}
+                  </option>
+              ))}
+            </select>
 
             <label>Provincia</label>
             <input {...register('state', { required: true })} type='text'/>
-            {errors.state && <span>Campo Obrigatorio</span>}
+            {errors.state && <span>Campo Incorreto!</span>}
 
             <label>Latitude</label>
-            <input {...register('latitude', { required: true })} type='number'/>
-            {errors.latitude && <span>Campo Obrigatorio</span>}
+            <input {...register('latitude', { required: true })} type='text'/>
+            {errors.latitude && <span>Campo Incorreto!</span>}
 
             <label>Longitude</label>
-            <input {...register('longitude', { required: true })} type='number'/>
-            {errors.longitude && <span>Campo Obrigatorio</span>}
+            <input {...register('longitude', { required: true })} type='text'/>
+            {errors.longitude && <span>Campo Incorreto</span>}
 
             <button type='submit'>Criar Conta</button>
             <p>OU</p>

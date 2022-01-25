@@ -21,7 +21,7 @@ interface User{
     latitude: number,
     longitude: number,
     state: string,
-    isAdmin: string
+    isAdmin: boolean
 }
 
 interface IToken{

@@ -7,8 +7,6 @@ import Dashboard from './pages/Dashboard'
 
 import { ProtectedRoutes } from './Components/ProtectedRoutes'
 import { PublicRoutes } from './Components/PublicRoutes'
-import { RootRoutes } from './Components/RootRoutes'
-
 
 export default function App(){
 
@@ -30,9 +28,9 @@ export default function App(){
                 </PublicRoutes>
             }/> 
             <Route  path='/dashboard' element={
-                <RootRoutes>
+                <ProtectedRoutes>
                     <Dashboard/>
-                </RootRoutes>
+                </ProtectedRoutes>
             }/>
         </Routes>
     )

@@ -25,7 +25,7 @@ function SignIn() {
       await signIn({ username, password });
 
       reset();
-      navigator('/dashboard');
+      navigator('/');
 
     } catch (error) {
       toast('Nome de usuario ou senha incorreta',{
