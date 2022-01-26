@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom'
+import MaterialTable from "material-table";
 import api from "../services/api";
 
 interface User{
@@ -16,6 +17,7 @@ function Dashboard(){
 
     const navigate = useNavigate();
     const [users, setUsers] = useState<User[]>([]);
+    const [filterResults, setFilterResult] = useState<User[]>(users);
 
     const { user , logout} = useContext(AuthContext);
 
@@ -25,6 +27,7 @@ function Dashboard(){
         }
         api.get('/users').then(response=>{
             setUsers(response.data);
+            setFilterResult(users)
         });
     })
 
@@ -37,36 +40,22 @@ function Dashboard(){
                 <button onClick={()=> logout()} className='logout'>Logout</button>
             </div>
           </div>
-          <div className="card">
-              <div className="header">
-                    <label className='title'>Filtrar Por</label>
-                    <select name="time" id="">
-                        <option value="week">Semana</option>
-                        <option value="month">Mês</option>
-                        <option value="year">Ano</option>
-                    </select>
-              </div>
-             <div className="content">
-                <table>
-                    <tr>
-                        <th>User</th>
-                        <th>Pais</th>
-                        <th>Província</th>
-                        <th>Data de Registro</th>
-                    </tr>
-                    {users.length && users.map(user=>(
-                        <tr key={user.username}>
-                            <td>{user.username}</td>
-                            <td>{user.country}</td>
-                            <td>{user.state}</td>
-                            <td>{user.createdAt}</td>
-                        </tr>
-                    ))}
-                </table>
+          <div className='dashboardContainer'>
+            <div className="filterContainer">
+                <label>Filtrar por</label>
+                <select>
+                    <option value="">dads</option>
+                </select>
+                <button>Filtrar</button>
+            </div>
+            <MaterialTable style={{width: '100%', height: '600px', padding: 12}} 
+                            title='Registros de Usuarios' columns={[
+                            {title: 'Usuario', field: 'username'},
+                            {title: 'Pais', field: 'country'},
+                            {title: 'Provincia', field: 'state'},
+                            {title: 'Registrado Em', field: 'createdAt'}]}
+                            data={filterResults}/>
 
-                <p className='counter'>Registros: {users.length}</p>
-
-             </div>
           </div>
         </div>
     )

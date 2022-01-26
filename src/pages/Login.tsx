@@ -1,4 +1,4 @@
-import { Link , useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Map from '../assets/map.svg';
 import { useForm } from 'react-hook-form'
 import { useContext } from 'react';
@@ -12,20 +12,16 @@ type IFormInput = {
 
 function SignIn() {
 
-  const navigator = useNavigate();
-
   const { signIn } = useContext(AuthContext);
 
-  const {handleSubmit, register, formState: { errors } , reset} = useForm<IFormInput>();
+  const { handleSubmit, register, formState: { errors } , reset} = useForm<IFormInput>();
 
 
   const onSubmit = async ({username, password}: IFormInput)=>{
       
     try {
       await signIn({ username, password });
-
       reset();
-      navigator('/');
 
     } catch (error) {
       toast('Nome de usuario ou senha incorreta',{
@@ -43,7 +39,7 @@ function SignIn() {
       <main>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Geolocatme</h2>
-          <h3>A melhor plataforma para localizar as pessoas que você ama!</h3>
+          <h3>A melhor plataforma para localizar as pessoas ao redor do mundo!</h3>
 
           <label>Nome de Usuario</label>
           <input {...register('username', { required: true })} type='text'/>
