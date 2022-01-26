@@ -49,8 +49,8 @@ function Home() {
             </div>
           </div>
           <div className='appContainer'>
-            <MaterialTable 
-                            style={{width: '100%', height: '600px', padding: 12}} 
+            <MaterialTable  style={{width: '100%', height: 'auto', 
+                                    maxHeight: '600px', padding: 12}} 
                             title='Usuarios' columns={[
                             {title: 'User', field: 'username'},
                             {title: 'Pais', field: 'country'},
