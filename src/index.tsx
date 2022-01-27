@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom';
 import './index.css';
+
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-dropdown/style.css';
+
 import { ToastContainer } from 'react-toastify';
 
 import App from './App';
