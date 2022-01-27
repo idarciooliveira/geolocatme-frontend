@@ -35,7 +35,7 @@ function Home() {
 
   const handleLocate = ({ longitude, latitude }: User)=>{
     if(map){
-      map.flyTo([latitude,longitude], 12)
+      map.flyTo([latitude,longitude], 16)
     }
   }
 

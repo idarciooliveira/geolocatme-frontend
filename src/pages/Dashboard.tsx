@@ -17,7 +17,7 @@ function Dashboard(){
 
     const navigate = useNavigate();
     const [users, setUsers] = useState<User[]>([]);
-    const [registerNumber, setRegisterNumber] = useState<number>(0);
+    const [registerNumber, setRegisterNumber] = useState<number>();
     const [optionSelected, setOptionSelected] = useState<Option>()
 
     const { user , logout} = useContext(AuthContext);
